@@ -1,21 +1,68 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../types/navigationTypes";
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
 interface HomeScreenProps {
-  navigation: any; // Adjust navigation type when needed
+  navigation: HomeScreenNavigationProp;
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Welcome to the Home Screen!</Text>
-      <Button title="Login" onPress={() => navigation.navigate("Login")} />
-      <Button
-        title="Register"
-        onPress={() => navigation.navigate("Register")}
-      />
+    <View style={styles.outerContainer}>
+      <View style={styles.container}>
+        <Text style={styles.text}>Welcome to the Home Screen!</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Login")}
+        >
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Register")}
+        >
+          <Text style={styles.buttonText}>Register</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  outerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f0f0f0",
+  },
+  container: {
+    width: "80%",
+    height: "60%",
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  text: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#007BFF",
+    padding: 10,
+    width: "100%",
+    marginTop: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+  },
+});
 
 export default HomeScreen;

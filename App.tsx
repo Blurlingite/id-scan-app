@@ -1,23 +1,13 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./src/screens/HomeScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
+import { RootStackParamList } from "./src/types/navigationTypes";
 
-// Define the types for your navigation stack
-// These will be the screens you can naviagte to
-type RootStackParamList = {
-  Home: undefined;
-  Login: undefined;
-  Register: undefined;
-};
-
-// Create the stack navigator
 const Stack = createStackNavigator<RootStackParamList>();
 
-// The main component that sets up navigation
 const App: React.FC = () => {
   return (
     <NavigationContainer>
