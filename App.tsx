@@ -34,6 +34,8 @@ const Stack = createStackNavigator<RootStackParamList>();
 //             }
 //           );
 //         });
+//         const token = Math.random().toString(36).substring(2);
+//         return token;
 //       },
 //       (error) => {
 //         console.error("Cannot open database", error);
