@@ -2,6 +2,8 @@
 // These will be the screens you can naviagte to in the whole app
 export type RootStackParamList = {
   Home: undefined;
-  Login: undefined;
-  Register: undefined;
+  StudentLogin: undefined;
+  ProfessorLogin: undefined;
+  StudentRegisterScreen: undefined;
+  ProfessorRegisterScreen: undefined;
 };

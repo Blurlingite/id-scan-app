@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from "react-native";
 
-const LoginScreen = () => {
+const ProfessorLoginScreen = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,7 +24,7 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Professor Login</Text>
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -39,7 +39,7 @@ const LoginScreen = () => {
         onChangeText={(text) => setPassword(text)}
       />
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>Professor Login</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleForgotPassword}>
         <Text style={styles.forgotPasswordText}>Forgot Username/Password?</Text>
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default ProfessorLoginScreen;

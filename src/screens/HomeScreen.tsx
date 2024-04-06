@@ -16,15 +16,27 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         <Text style={styles.text}>Welcome to the Home Screen!</Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => navigation.navigate("StudentLogin")}
         >
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>Student Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("Register")}
+          onPress={() => navigation.navigate("ProfessorLogin")}
         >
-          <Text style={styles.buttonText}>Register</Text>
+          <Text style={styles.buttonText}>Professor Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("StudentRegisterScreen")}
+        >
+          <Text style={styles.buttonText}>Student Register</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("ProfessorRegisterScreen")}
+        >
+          <Text style={styles.buttonText}>Professor Register</Text>
         </TouchableOpacity>
       </View>
     </View>
