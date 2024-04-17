@@ -34,8 +34,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 //             }
 //           );
 //         });
-//         const token = Math.random().toString(36).substring(2);
-//         return token;
+//         
 //       },
 //       (error) => {
 //         console.error("Cannot open database", error);
@@ -47,8 +46,19 @@ const Stack = createStackNavigator<RootStackParamList>();
 // }, []);
 
 // creating nfc token
+
+function encrypt(text, key) {
+  const cipher = crypto.createCipher('aes-256-cbc', key);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return encrypted;
+};
+
 const createNfcToken = (userData: string) => {
-  // to do : nfc creator
+  const token = Math.random().toString(36).substring(2);
+  const encryptionKey = Math.random().toString(36).substring(2);
+  token = encrypt(token, encryptionKey);
+  return token;
 };
 const App: React.FC = () => {
   return (
