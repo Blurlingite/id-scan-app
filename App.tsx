@@ -7,62 +7,63 @@ import ProfessorLoginScreen from "./src/screens/ProfessorLoginScreen";
 import StudentRegisterScreen from "./src/screens/StudentRegisterScreen";
 import ProfessorRegisterScreen from "./src/screens/ProfessorRegisterScreen";
 import { RootStackParamList } from "./src/types/navigationTypes";
-import SQLite from "react-native-sqlite-storage";
-import {Ndef} from "react-native-nfc-manager";
-import crypto from "crypto";
+import StudentProfileScreen from "./src/screens/StudentProfileScreen";
+// import SQLite from "react-native-sqlite-storage";
+// import { Ndef } from "react-native-nfc-manager";
+// import crypto from "crypto";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
- useEffect(() => {
-   //function for creating the nfc token from database
-      const createNfcTokenFromDatabase = () => {
-    SQLite.openDatabase(
-       { name: "databaseName.db", location: "default" },
-       //searching the database to get the user data
-       (db) => {
-         db.transaction((tx) => {
-           tx.executeSql(
-             "SELECT user_data From nfc_data",
-             [],
-             (_, { rows }) => {
-               const { _array } = rows;
-               _array.forEach((row: { user_data: string }) => {
-                 const { user_data } = row;
-                 createNfcToken(user_data);
-                 Ndef.writeNdefMessage(Ndef.encodeMessage([Ndef.textRecord(token)]));
-               });
-             },
-             (error) => {
-               console.error("Cannot connect to database", error);
-             }
-           );
-         });
+//  useEffect(() => {
+//    //function for creating the nfc token from database
+//       const createNfcTokenFromDatabase = () => {
+//     SQLite.openDatabase(
+//        { name: "databaseName.db", location: "default" },
+//        //searching the database to get the user data
+//        (db) => {
+//          db.transaction((tx) => {
+//            tx.executeSql(
+//              "SELECT user_data From nfc_data",
+//              [],
+//              (_, { rows }) => {
+//                const { _array } = rows;
+//                _array.forEach((row: { user_data: string }) => {
+//                  const { user_data } = row;
+//                  createNfcToken(user_data);
+//                  Ndef.writeNdefMessage(Ndef.encodeMessage([Ndef.textRecord(token)]));
+//                });
+//              },
+//              (error) => {
+//                console.error("Cannot connect to database", error);
+//              }
+//            );
+//          });
 
-       },
-       (error) => {
-         console.error("Cannot open database", error);
-       }
-     );
-   };
-   // nfc creation
-   createNfcTokenFromDatabase();
- }, []);
+//        },
+//        (error) => {
+//          console.error("Cannot open database", error);
+//        }
+//      );
+//    };
+//    // nfc creation
+//    createNfcTokenFromDatabase();
+//  }, []);
 
- //creating nfc token
+//creating nfc token
 
-function encrypt(text: string, key: string) {
-  const cipher = crypto.createCipher('aes-256-cbc', key);
-  let encrypted = cipher.update(text, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  return encrypted;
-};
+// function encrypt(text: string, key: string) {
+//   const cipher = crypto.createCipher("aes-256-cbc", key);
+//   let encrypted = cipher.update(text, "utf8", "hex");
+//   encrypted += cipher.final("hex");
+//   return encrypted;
+// }
 
-const createNfcToken = (userData: string) => {
-  let token = Math.random().toString(36).substring(2);
-  const encryptionKey = crypto.randomBytes(16).toString('hex');
-  token = encrypt(token, encryptionKey);
-  return token;
-};
+// const createNfcToken = (userData: string) => {
+//   let token = Math.random().toString(36).substring(2);
+//   const encryptionKey = crypto.randomBytes(16).toString("hex");
+//   token = encrypt(token, encryptionKey);
+//   return token;
+// };
 const App: React.FC = () => {
   return (
     <NavigationContainer>
@@ -77,6 +78,10 @@ const App: React.FC = () => {
         <Stack.Screen
           name="ProfessorRegisterScreen"
           component={ProfessorRegisterScreen}
+        />
+        <Stack.Screen
+          name="StudentProfileScreen"
+          component={StudentProfileScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

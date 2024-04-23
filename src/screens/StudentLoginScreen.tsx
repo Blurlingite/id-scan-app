@@ -6,15 +6,50 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import axios from "axios";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../types/navigationTypes";
 
-const StudentLoginScreen = () => {
-  const [username, setUsername] = useState("");
+type StudentLoginScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Home"
+>;
+
+interface StudentLoginScreenProps {
+  navigation: StudentLoginScreenNavigationProp;
+}
+
+const StudentLoginScreen: React.FC<StudentLoginScreenProps> = ({
+  navigation,
+}) => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    // Put login logic here
-    console.log("Username:", username);
-    console.log("Password:", password);
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        "http://64.187.254.242:3000/students/login",
+        { email } // Include email parameter in the request body
+      );
+
+      const student = response.data;
+
+      navigation.navigate("StudentProfileScreen", { student } as any);
+
+      console.log("Server Response:", response.data);
+    } catch (error: any) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error("Response status:", error.response.status);
+        console.error("Response data:", error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("No response received:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an error
+        console.error("Error:", error.message);
+      }
+    }
   };
 
   const handleForgotPassword = () => {
@@ -27,9 +62,9 @@ const StudentLoginScreen = () => {
       <Text style={styles.title}>Student Login</Text>
       <TextInput
         style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={(text) => setUsername(text)}
+        placeholder="Email"
+        value={email}
+        onChangeText={(text) => setEmail(text)}
       />
       <TextInput
         style={styles.input}
