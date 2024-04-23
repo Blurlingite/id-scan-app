@@ -1,12 +1,108 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import axios from "axios";
 
 const StudentRegisterScreen = () => {
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [date_of_birth, setDateOfBirth] = useState("");
+  const [phone_number, setPhoneNumber] = useState("");
+
+  const handleRegister = async () => {
+    try {
+      const response = await axios.post(
+        "http://64.187.254.242:3000/students/register",
+        {
+          first_name,
+          last_name,
+          email,
+          date_of_birth,
+          phone_number,
+        }
+      );
+      console.log("Registration Successful:", response.data);
+    } catch (error: any) {
+      console.error("Registration Error:", error.message);
+    }
+  };
+
   return (
-    <View>
-      <Text>Student Register Screen</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Student Registration</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="First Name"
+        value={first_name}
+        onChangeText={(text) => setFirstName(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Last Name"
+        value={last_name}
+        onChangeText={(text) => setLastName(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={(text) => setEmail(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Date of Birth (YYYY-MM-DD)"
+        value={date_of_birth}
+        onChangeText={(text) => setDateOfBirth(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Phone Number"
+        value={phone_number}
+        onChangeText={(text) => setPhoneNumber(text)}
+      />
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+        <Text style={styles.buttonText}>Register</Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  input: {
+    width: "80%",
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: "blue",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+});
 
 export default StudentRegisterScreen;
