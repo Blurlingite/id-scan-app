@@ -59,7 +59,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 // }
 
 // const createNfcToken = (userData: string) => {
-//   let token = Math.random().toString(36).substring(2);
+//   let token = userData;
 //   const encryptionKey = crypto.randomBytes(16).toString("hex");
 //   token = encrypt(token, encryptionKey);
 //   return token;
