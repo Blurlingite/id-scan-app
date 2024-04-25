@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 import axios from "axios";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types/navigationTypes";
+import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
 
 type StudentLoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -25,10 +26,26 @@ const StudentLoginScreen: React.FC<StudentLoginScreenProps> = ({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [ipAddress, setIpAddress] = useState<string>("");
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      // handles only wifi
+      if (state.isConnected && state.type === "wifi") {
+        const wifiDetails = state.details as { ipAddress?: string };
+        if (wifiDetails.ipAddress) {
+          setIpAddress(wifiDetails.ipAddress);
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "http://64.187.254.242:3000/students/login",
+        `http://192.168.1.157:3000/students/login`,
         { email } // Include email parameter in the request body
       );
 
