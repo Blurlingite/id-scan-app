@@ -7,8 +7,21 @@ import {
   StyleSheet,
 } from "react-native";
 import axios from "axios";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../types/navigationTypes";
+import { my_ip_address } from '../../ipAddress';
 
-const StudentRegisterScreen = () => {
+
+type StudentLoginScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Home"
+>;
+
+interface StudentLoginScreenProps {
+  navigation: StudentLoginScreenNavigationProp;
+}
+
+const StudentRegisterScreen: React.FC<StudentLoginScreenProps> = ({navigation}) => {
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,7 +31,7 @@ const StudentRegisterScreen = () => {
   const handleRegister = async () => {
     try {
       const response = await axios.post(
-        "http://64.187.254.242:3000/students/register",
+        `http://${my_ip_address}:3000/students/register`,
         {
           first_name,
           last_name,
@@ -28,6 +41,8 @@ const StudentRegisterScreen = () => {
         }
       );
       console.log("Registration Successful:", response.data);
+      navigation.navigate('Home'); // Replace 'SuccessScreen' with the name of your success screen
+
     } catch (error: any) {
       console.error("Registration Error:", error.message);
     }

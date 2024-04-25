@@ -10,6 +10,7 @@ import axios from "axios";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types/navigationTypes";
 import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
+import { my_ip_address } from '../../ipAddress';
 
 type StudentLoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -45,7 +46,7 @@ const StudentLoginScreen: React.FC<StudentLoginScreenProps> = ({
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        `http://192.168.1.157:3000/students/login`,
+        `http://${my_ip_address}:3000/students/login`,
         { email } // Include email parameter in the request body
       );
 
