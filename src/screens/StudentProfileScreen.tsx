@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../types/navigationTypes";
@@ -19,6 +19,8 @@ interface Student {
     email: string;
   };
 }
+
+
 const StudentProfileScreen: React.FC<Props> = ({ route }) => {
   // Use optional chaining to safely access nested properties
   const student: Student | undefined = route?.params?.student;
@@ -27,10 +29,12 @@ const StudentProfileScreen: React.FC<Props> = ({ route }) => {
     <View style={styles.outerContainer}>
       <View style={styles.container}>
         <Text style={styles.text}>
-          Welcome to the StudentProfile Screen,{" "}
+          Welcome,{" "}
           {student ? student.user.first_name : "Unknown"}!
         </Text>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+        >
           <Text style={styles.buttonText}>Generate NFC Code</Text>
         </TouchableOpacity>
       </View>

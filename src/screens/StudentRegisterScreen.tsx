@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert
 } from "react-native";
 import axios from "axios";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -25,10 +26,15 @@ const StudentRegisterScreen: React.FC<StudentLoginScreenProps> = ({navigation}) 
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [date_of_birth, setDateOfBirth] = useState("");
-  const [phone_number, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+
 
   const handleRegister = async () => {
+      // Check if any required fields are empty
+  if (!first_name || !last_name || !email || !password) {
+    Alert.alert("Missing Information", "Please fill in all required fields.");
+    return;
+  }
     try {
       const response = await axios.post(
         `http://${my_ip_address}:3000/students/register`,
@@ -36,12 +42,11 @@ const StudentRegisterScreen: React.FC<StudentLoginScreenProps> = ({navigation}) 
           first_name,
           last_name,
           email,
-          date_of_birth,
-          phone_number,
+          password,
         }
       );
       console.log("Registration Successful:", response.data);
-      navigation.navigate('Home'); // Replace 'SuccessScreen' with the name of your success screen
+      navigation.navigate('Home');
 
     } catch (error: any) {
       console.error("Registration Error:", error.message);
@@ -71,15 +76,9 @@ const StudentRegisterScreen: React.FC<StudentLoginScreenProps> = ({navigation}) 
       />
       <TextInput
         style={styles.input}
-        placeholder="Date of Birth (YYYY-MM-DD)"
-        value={date_of_birth}
-        onChangeText={(text) => setDateOfBirth(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Phone Number"
-        value={phone_number}
-        onChangeText={(text) => setPhoneNumber(text)}
+        placeholder="Password"
+        value={password}
+        onChangeText={(text) => setPassword(text)}
       />
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>Register</Text>
