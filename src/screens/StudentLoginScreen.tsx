@@ -27,27 +27,11 @@ const StudentLoginScreen: React.FC<StudentLoginScreenProps> = ({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [ipAddress, setIpAddress] = useState<string>("");
-
-  useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener((state) => {
-      // handles only wifi
-      if (state.isConnected && state.type === "wifi") {
-        const wifiDetails = state.details as { ipAddress?: string };
-        if (wifiDetails.ipAddress) {
-          setIpAddress(wifiDetails.ipAddress);
-        }
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
   const handleLogin = async () => {
     try {
       const response = await axios.post(
         `http://${my_ip_address}:3000/students/login`,
-        { email } // Include email parameter in the request body
+        { email, password } // Include email parameter in the request body
       );
 
       const student = response.data;
