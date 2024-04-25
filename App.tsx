@@ -8,17 +8,14 @@ import StudentRegisterScreen from "./src/screens/StudentRegisterScreen";
 import ProfessorRegisterScreen from "./src/screens/ProfessorRegisterScreen";
 import { RootStackParamList } from "./src/types/navigationTypes";
 import StudentProfileScreen from "./src/screens/StudentProfileScreen";
-import { createNFCTokenFromDatabase } from "./NFC";
-import { Button } from "react-native";
-
+// import { createNFCTokenFromDatabase } from "./NFC";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const App: React.FC = () => {
-  
-  useEffect(() => {
-    createNFCTokenFromDatabase();
-  }, []);
+  // useEffect(() => {
+  //   createNFCTokenFromDatabase();
+  // }, []);
 
   return (
     <NavigationContainer>
@@ -37,14 +34,6 @@ const App: React.FC = () => {
         <Stack.Screen
           name="StudentProfileScreen"
           component={StudentProfileScreen}
-          options={{
-            headerRight: () => (
-              <Button
-              onPress= {() => createNFCTokenFromDatabase()}
-              title = "Marked Present"
-              />
-            ),
-          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
