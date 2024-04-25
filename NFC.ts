@@ -1,6 +1,6 @@
 import SQLite from "react-native-sqlite-storage";
 import {Ndef} from "react-native-nfc-manager";
-import crypto from  "crypto";
+//import crypto from  "crypto";
 
 function createNFCTokenFromDatabase() {
     SQLite.openDatabase(
@@ -29,16 +29,16 @@ function createNFCTokenFromDatabase() {
         }
     );
 }
-function encrypt(text: string, key: string){
-    const cipher = crypto.createCipher("aes-256-cbc", key);
-    let encrypted = cipher.update(text, "utf8", "hex");
-    encrypted += cipher.final("hex");
-    return encrypted;
-}
+//function encrypt(text: string, key: string){
+    //const cipher = crypto.createCipher("aes-256-cbc", key);
+    //let encrypted = cipher.update(text, "utf8", "hex");
+   // encrypted += cipher.final("hex");
+   // return encrypted;
+//}
 function createNfcToken(user_data: string) {
-    const encryptionKey = crypto.randomBytes(16).toString("hex");
+    //const encryptionKey = crypto.randomBytes(16).toString("hex");
     let token = user_data;
-    token = encrypt(token, encryptionKey);
+    //token = encrypt(token, encryptionKey);
     return token;
 }
 export { createNFCTokenFromDatabase};
