@@ -34,7 +34,7 @@ function createNFCTokenFromDatabase() {
     //let encrypted = cipher.update(text, "utf8", "hex");
    // encrypted += cipher.final("hex");
    // return encrypted;
-}
+//}
 function createNfcToken(user_data: string) {
     //const encryptionKey = crypto.randomBytes(16).toString("hex");
     let token = user_data;
