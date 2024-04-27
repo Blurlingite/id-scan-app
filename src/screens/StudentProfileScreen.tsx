@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../types/navigationTypes";
 
@@ -20,6 +20,9 @@ interface Student {
   };
 }
 
+const handleGenerateNfcCode = () => {
+  Alert.alert("NFC Code Generated", "Your NFC code is XXXX-XXXX-XXXX-XXXX");
+};
 
 const StudentProfileScreen: React.FC<Props> = ({ route }) => {
   // Use optional chaining to safely access nested properties
@@ -35,7 +38,8 @@ const StudentProfileScreen: React.FC<Props> = ({ route }) => {
         <TouchableOpacity
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Generate NFC Code</Text>
+          <Text style={styles.buttonText} onPress={(handleGenerateNfcCode)}
+>Generate NFC Code</Text>
         </TouchableOpacity>
       </View>
     </View>

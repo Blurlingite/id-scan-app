@@ -12,6 +12,8 @@ interface HomeScreenProps {
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   return (
     <View style={styles.outerContainer}>
+       <Text style={styles.logo}>EZ Attendance</Text>
+
       <View style={styles.container}>
         <Text style={styles.text}>Welcome to the Home Screen!</Text>
         <TouchableOpacity
@@ -74,6 +76,12 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 16,
+  },
+  logo: {
+    color: "#007BFF",
+    fontSize: 36,
+    marginBottom: 80,
+    fontWeight: 'bold',
   },
 });
 
