@@ -6,15 +6,53 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { RootStackParamList } from "../types/navigationTypes";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { my_ip_address } from "../../ipAddress";
+import axios from "axios";
 
-const ProfessorLoginScreen = () => {
-  const [username, setUsername] = useState("");
+type ProfessorLoginScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Home"
+>;
+
+interface ProfessorLoginScreenProps {
+  navigation: ProfessorLoginScreenNavigationProp;
+}
+
+const ProfessorLoginScreen: React.FC<ProfessorLoginScreenProps> = ({
+  navigation,
+}) => {
+
+  const [professor_id, setProfessor_id] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    // Put login logic here
-    console.log("Username:", username);
-    console.log("Password:", password);
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        `http://${my_ip_address}:3000/professors/login`,
+        { professor_id, email, password } // Include email parameter in the request body
+      );
+
+      const professor = response.data;
+
+      navigation.navigate("ProfessorProfileScreen", { professor } as any);
+
+      console.log("Server Response:", response.data);
+    } catch (error: any) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error("Response status:", error.response.status);
+        console.error("Response data:", error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("No response received:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an error
+        console.error("Error:", error.message);
+      }
+    }
   };
 
   const handleForgotPassword = () => {
@@ -27,9 +65,15 @@ const ProfessorLoginScreen = () => {
       <Text style={styles.title}>Professor Login</Text>
       <TextInput
         style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={(text) => setUsername(text)}
+        placeholder="Professor ID"
+        value={professor_id}
+        onChangeText={(text) => setProfessor_id(text)}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={(text) => setEmail(text)}
       />
       <TextInput
         style={styles.input}

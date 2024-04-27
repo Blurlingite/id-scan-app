@@ -7,4 +7,5 @@ export type RootStackParamList = {
   StudentRegisterScreen: undefined;
   ProfessorRegisterScreen: undefined;
   StudentProfileScreen: undefined;
+  ProfessorProfileScreen: undefined
 };
