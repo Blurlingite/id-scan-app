@@ -35,7 +35,11 @@ const ProfessorLoginScreen: React.FC<ProfessorLoginScreenProps> = ({
         { professor_id, email, password } // Include email parameter in the request body
       );
 
+          console.log("professor: ")
+
       const professor = response.data;
+
+      console.log(professor)
 
       navigation.navigate("ProfessorProfileScreen", { professor } as any);
 
