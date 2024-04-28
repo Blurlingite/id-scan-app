@@ -6,14 +6,23 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import axios from "axios";
 import { my_ip_address } from "../../ipAddress";
 import formatTime from "../utils/formatTime";
+import { useNavigation } from "@react-navigation/native";
+import Course from "../types/course";
 
-type ProfessorProfileScreenRouteProp = RouteProp<
+type ProfessorProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "ProfessorProfileScreen"
+  "Home"
 >;
+
+interface ProfessorProfileScreenProps {
+  navigate: any;
+  navigation: ProfessorProfileScreenNavigationProp;
+}
+
 
 type Props = {
   route: any;
+  navigation: ProfessorProfileScreenProps;
 };
 
 interface Professor {
@@ -25,15 +34,7 @@ interface Professor {
   };
 }
 
-interface Course {
-  course_code: string;
-  course_name: string;
-  start_time: string;
-  end_time: string;
-  professor_id: number;
-}
-
-const ProfessorProfileScreen: React.FC<Props> = ({ route }) => {
+const ProfessorProfileScreen: React.FC<Props> = ({ route, navigation }) => {
 
     const [courses, setCourses] = useState([]);
 
@@ -69,19 +70,30 @@ const ProfessorProfileScreen: React.FC<Props> = ({ route }) => {
     getCourses();
   }, [professor_id]);
 
+      // Navigation function to navigate to another screen when a course code is clicked
+      const navigateToCourseDetails = (course: Course) => {
+        navigation.navigate("ProfessorRosterScreen", { course });
+    };
+
     return (
       <View style={styles.outerContainer}>
         <View style={styles.container}>
           <Text style={styles.text}>
-            Welcome,{" "}
-            {professor ? professor.user.first_name : "Unknown"}!
+            Welcome, Professor{" "}
+            {professor ? professor.user.first_name : "Unknown"} {" "}
+            {professor ? professor.user.last_name : "Unknown"}!
+
           </Text>
           {courses.map((course: Course, index) => (
         <View key={index} style={{ marginBottom: 10 }}>
+          <TouchableOpacity key={index} style={styles.courseContainer}
+            onPress={() => navigateToCourseDetails(course)}>
           <Text>Course Code: {course.course_code}</Text>
           <Text>Course Name: {course.course_name}</Text>
           <Text>Start Time: {formatTime(course.start_time)}</Text>
           <Text>End Time: {formatTime(course.end_time)}</Text>
+          </TouchableOpacity>
+
         </View>
       ))}
 
@@ -114,8 +126,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
-  course: {
-    fontSize: 14,
+  // course: {
+  //   fontSize: 14,
+  //   marginBottom: 5,
+  // },
+  courseContainer: {
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: "lightgrey",
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: "#ADD8E6", // Light blue background color
+  },
+  courseCode: {
+    fontSize: 16,
+    fontWeight: "bold",
     marginBottom: 5,
   },
 });

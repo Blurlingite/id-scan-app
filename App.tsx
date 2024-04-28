@@ -9,6 +9,7 @@ import ProfessorRegisterScreen from "./src/screens/ProfessorRegisterScreen";
 import { RootStackParamList } from "./src/types/navigationTypes";
 import StudentProfileScreen from "./src/screens/StudentProfileScreen";
 import ProfessorProfileScreen from "./src/screens/ProfessorProfileScreen";
+import ProfessorRosterScreen from "./src/screens/ProfessorRosterScreen";
 // import { createNFCTokenFromDatabase } from "./NFC";
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -40,7 +41,10 @@ const App: React.FC = () => {
           name="ProfessorProfileScreen"
           component={ProfessorProfileScreen}
         />
-
+         <Stack.Screen
+          name="ProfessorRosterScreen"
+          component={ProfessorRosterScreen}
+        />
 
 
       </Stack.Navigator>

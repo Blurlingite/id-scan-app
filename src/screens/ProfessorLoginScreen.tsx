@@ -37,7 +37,7 @@ const ProfessorLoginScreen: React.FC<ProfessorLoginScreenProps> = ({
 
       const professor = response.data;
 
-      navigation.navigate("ProfessorProfileScreen", { professor } as any);
+      navigation.navigate("ProfessorProfileScreen", { professor, navigation } as any);
 
       console.log("Server Response:", response.data);
     } catch (error: any) {
